@@ -1,0 +1,28 @@
+site_name: Online Library 
+docs_dir: docs
+site_description: Une application de bibliothèque en ligne qui permet aux utilisateurs de s'inscrire, de se connecter, de rechercher des livres, de gérer les emprunts et d'administrer le contenu
+repo_url: https://github.com/biso1991/biblioth-que_en_ligne/tree/backend
+site_dir: mysite
+copyright: Copyright &copy; 2024, <a href="https://github.com/biso1991/biblioth-que_en_ligne/tree/backend">Bilel Nasri</a>.
+dev_addr: 0.0.0.0:8001
+
+nav:
+  - Home: 'index.md'
+  - API:
+    - Authentication: 'api/authentication.md'
+    - Users: 'api/users.md'
+    - Library: 'api/agric.md'
+  - Documentation:
+    - Installation: 'Installation.md'
+    - API Endpoints: 'Api endpoints.md'
+    - References: 'References.md'
+    - Tool: 'Tools.md'
+    - Code: 'Code.md'
+    - Download: 'Download.md'
+    - Troubleshoot: 'Troubleshoot.md'
+  - Conception : 
+    - Module_project: 'global_conception/module_project.md'
+    - Conception: 'global_conception/Conception.md'
+    
+    
+
