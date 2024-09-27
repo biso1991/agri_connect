@@ -55,13 +55,17 @@ class UserCreateViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     Creates user accounts
     """
+    
     queryset = User.objects.all()
     # print(queryset, "#######################################################################")
     serializer_class = CreateUserSerializer
+    serializer_class.data
+    print("####################################")
     # Allows access only to authenticated users.
     permission_classes = (AllowAny,)
 
-
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 class UserAuthToken(ObtainAuthToken):
     """Get or create a token for a user"""
     def post(self, request, *args, **kwargs):

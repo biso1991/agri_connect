@@ -11,6 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "phone_nm",
         )
         read_only_fields = ("username",)
 
@@ -31,6 +32,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
+            "phone_nm",
             "auth_token",
         )
         read_only_fields = ("auth_token",)

@@ -33,7 +33,7 @@ class Common(Configuration):
         # "django_celery_results",
         # Your apps
         "api.users",
-        "api.on_lib",
+        "api.gr",
     )
 
     # CHANNEL_LAYERS = {

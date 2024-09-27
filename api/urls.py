@@ -31,7 +31,7 @@ from rest_framework.routers import DefaultRouter
 
 # from api.qa import consumers
 from .users.views import UserViewSet, UserCreateViewSet, UserAuthToken
-from api.on_lib.urls import router_lib
+from api.gr.urls import router_lib
 # 
 # from api.qa.views import ListProjectAPIView
 
@@ -42,7 +42,7 @@ urlpatterns = (
     [
         path("admin/", admin.site.urls),
         path("api/v1/", include(router.urls)),
-        path("api/v1/lib/", include(router_lib.urls)),
+        path("api/v1/agr/", include(router_lib.urls)),
         # path("api-token-auth/", UserAuthToken.as_view()),
         path('api-token-auth/', UserAuthToken.as_view(), name='api_token_auth'),
         # path("api/v1/lib/", include("api.on_lib.urls")),

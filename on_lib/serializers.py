@@ -1,11 +1,11 @@
-from .models import Book_project_lib
+from .models import Product
 from rest_framework import serializers
 
 # serializing book and borrow
 class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Book_project_lib
+        model = Product
         fields = '__all__'
 
 

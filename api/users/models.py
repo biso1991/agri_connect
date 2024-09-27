@@ -9,9 +9,14 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail
 
 
+def check_country_nm(country_number):
+    # user =User.objects.get(country=instance.country_nm)
+    return "{country_number}".format(country_number="+216")
 # User Model
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    phone_nm = models.IntegerField("", max_length=8, blank=True, default=0) # check length number !!!
+    # country_nm = models.IntegerField(validators=[check_country_nm]) checking !!!
     def __str__(self):
         return self.username
 

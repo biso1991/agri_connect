@@ -7,7 +7,7 @@ from rest_framework.response import Response
 # from rest_framework.permissions import IsAuthenticated
 # from .permissions import 
 # from .serializers import CreateUserSerializer, UserSerializer, ChangePasswordSerializer
-from .models  import Book_project_lib
+from .models  import Product
 from .serializers import BookSerializer
 from .paginations import CustomPageNumberPagination
 from .permission import Has_permissionOrReadOnly
@@ -23,7 +23,7 @@ class BookAPIVIEW(mixins.RetrieveModelMixin,
                   mixins.CreateModelMixin,
                   viewsets.GenericViewSet):
     
-    queryset=Book_project_lib.objects.all()
+    queryset=Product.objects.all()
     # queryset=Book.objects.get(title="j")
     serializer_class = BookSerializer
     pagination_class = CustomPageNumberPagination

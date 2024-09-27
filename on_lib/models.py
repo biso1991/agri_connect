@@ -6,7 +6,9 @@ from django.conf import settings
 from  django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
 
-# Create book model
+# Create agr model
+
+
 
 
 
@@ -14,7 +16,11 @@ from django.core.exceptions import ValidationError
 class Product(models.Model):
     product_name = models.CharField( "library name",max_length=20,default="", blank=True)
     description = models.TextField("description_lib",default="", blank=True)
-    category = mof
+    category = models.CharField("cat", max_length=50, blank=True)
+    quantity = models.IntegerField("qnt", default=0)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    quality_check = models.CharField("qualty", max_length=50)
+    logistic_details = models.CharField("log", max_length=50) 
     created_at = models.DateTimeField("create at ",auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.deletion.CASCADE, null=True)
@@ -57,7 +63,7 @@ class File (models.Model):
     file_sz = models.FloatField("file size", default=0)
     create_at = models.DateTimeField("file_created",auto_now_add=True)
     update_at = models.DateTimeField("file_updated",auto_now=True)
-    file_fk = models.ForeignKey(Book_project_lib, on_delete=models.deletion.CASCADE, null = True)
+    file_fk = models.ForeignKey(Product, on_delete=models.deletion.CASCADE, null = True)
     genre = models.CharField(max_length=50,default="", blank=True)
     available = models.BooleanField(default=True)
     

@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from api.on_lib.models import Book_project_lib
+from api.on_lib.models import Product
 
 
 class Has_permissionOrReadOnly(permissions.BasePermission):
@@ -9,7 +9,7 @@ class Has_permissionOrReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, views, obj):
         # Single object permissions
-        if isinstance(obj, Book_project_lib):
+        if isinstance(obj, Product):
             return obj.owner.id == request.user.id
         else:
             return False
