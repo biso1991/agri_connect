@@ -3,7 +3,7 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 router_lib = DefaultRouter()
-router_lib.register(r"agriculture", views.BookAPIVIEW)
+router_lib.register(r"agriculture", views.LogisticAPIVIEW, views.ProductAPIVIEW )
 
 
 

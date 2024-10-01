@@ -1,17 +1,29 @@
-from .models import Product
+from .models import Product, Logistics, Rdv
 from rest_framework import serializers
 
 # serializing book and borrow
-class BookSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
         fields = '__all__'
 
 
-class GetBookByUserSerialize(serializers.Serializer):
+class GetProductByUserSerialize(serializers.Serializer):
 
     owner = serializers.CharField(required=True)
+
+class LogisticSerialize(serializers.ModelSerializer):
+      class Meta:
+        model = Logistics
+        fields = '__all__'
+class RdvSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Rdv
+        fields= "__all__"
+
+        
+
 
 
 

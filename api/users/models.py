@@ -7,15 +7,23 @@ from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail
+import enum
 
 
 def check_country_nm(country_number):
     # user =User.objects.get(country=instance.country_nm)
     return "{country_number}".format(country_number="+216")
+
+
+# class Nm_cnrt(enum.Enum):
+#     TUN = "+216"
+#     MAR = "+212"
 # User Model
 class User(AbstractUser):
+#     choice_num = ((Nm_cnrt.TUN.value, "+216"),
+#                   (Nm_cnrt.MAR.value, "+212"))
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    phone_nm = models.IntegerField("", max_length=8, blank=True, default=0) # check length number !!!
+    # phone_nm = models.IntegerField("phone_nm", choices=choice_num, default=Nm_cnrt.TUN.value , blank=True) # check length number !!!
     # country_nm = models.IntegerField(validators=[check_country_nm]) checking !!!
     def __str__(self):
         return self.username
