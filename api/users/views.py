@@ -21,16 +21,16 @@ class UserViewSet(
     queryset = User.objects.all()
 
     serializer_class = UserSerializer
-    print("########################################################### serializer_class ",serializer_class)
+    # print("########################################################### serializer_class ",serializer_class)
     permission_classes = (IsUserOrReadOnly,)
-    print("########################################################### permission_classes,",permission_classes)
+    # print("########################################################### permission_classes,",permission_classes)
     def partial_update(self, request, *args, **kwargs):
         serializer = ChangePasswordSerializer(data=request.data)
-        print(serializer,"####################################################",request.data)
+        # print(serializer,"####################################################",request.data)
         if serializer.is_valid():
             # Check old password
             user = User.objects.get(id=request.user.id)
-            print("########################################################### user token,", user)
+            # print("########################################################### user token,", user)
 
             # check old password 
             if not user.check_password(serializer.data.get("old_password")):
@@ -60,7 +60,7 @@ class UserCreateViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     # print(queryset, "#######################################################################")
     serializer_class = CreateUserSerializer
     serializer_class.data
-    print("####################################")
+    # print("####################################")
     # Allows access only to authenticated users.
     permission_classes = (AllowAny,)
 
@@ -72,11 +72,11 @@ class UserAuthToken(ObtainAuthToken):
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
-        print(request.data,"##################################")
+        # print(request.data,"##################################")
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        print(token,"################################")
+        # print(token,"################################")
         
         return Response(
             {

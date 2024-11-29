@@ -1,0 +1,148 @@
+from datetime import datetime
+
+class Comment:
+    def __init__(self, email, content, created=None):
+        self.email = email
+        self.content = content
+        self.created = created or datetime.now()
+
+comment = Comment(email='leila@example.com', content='foo bar')
+
+
+from rest_framework import serializers
+
+class CommentSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    content = serializers.CharField(max_length=200)
+    created = serializers.DateTimeField()
+
+
+
+serializer = CommentSerializer(comment)
+serializer.data
+# {'email': 'leila@example.com', 'content': 'foo bar', 'created': '2016-01-27T15:17:10.375877'}
+
+
+from rest_framework.renderers import JSONRenderer
+
+json = JSONRenderer().render(serializer.data)
+json
+# b'{"email":"leila@example.com","content":"foo bar","created":"2016-01-27T15:17:10.375877"}'
+
+
+# then we restore those native datatypes into a dictionary of validated data.
+
+serializer = CommentSerializer(data=data)
+serializer.is_valid()
+# True
+serializer.validated_data
+# {'content': 'foo bar', 'email': 'leila@example.com', 'created': datetime.datetime(2012, 08, 22, 16, 20, 09, 822243)}
+
+# Saving instances
+
+# If we want to be able to return complete object instances based on the validated data we need to implement one or both of the .create() and .update() methods. For example:
+
+class CommentSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    content = serializers.CharField(max_length=200)
+    created = serializers.DateTimeField()
+
+    def create(self, validated_data):
+        return Comment(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.content = validated_data.get('content', instance.content)
+        instance.created = validated_data.get('created', instance.created)
+        return instance
+# If your object instances correspond to Django models you'll also want to ensure that these methods save the object to the database. For example, if Comment was a Django model, the methods might look like this:
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.content = validated_data.get('content', instance.content)
+        instance.created = validated_data.get('created', instance.created)
+        instance.save()
+        return instance
+# Now when deserializing data, we can call .save() to return an object instance, based on the validated data.
+
+comment = serializer.save()
+
+# Calling .save() will either create a new instance, or update an existing instance, depending on if an existing instance was passed when instantiating the serializer class:
+
+# .save() will create a new instance.
+serializer = CommentSerializer(data=data)
+
+# .save() will update the existing `comment` instance.
+serializer = CommentSerializer(comment, data=data)
+
+# Both the .create() and .update() methods are optional. You can implement either none, one, or both of them, depending on the use-case for your serializer class.
+# Passing additional attributes to .save()
+
+# Sometimes you'll want your view code to be able to inject additional data at the point of saving the instance. This additional data might include information like the current user, the current time, or anything else that is not part of the request data.
+
+# You can do so by including additional keyword arguments when calling .save(). For example:
+
+serializer.save(owner=request.user)
+
+
+
+
+
+
+This class implements the same basic API as the Serializer class:
+
+    .data - Returns the outgoing primitive representation.
+    .is_valid() - Deserializes and validates incoming data.
+    .validated_data - Returns the validated incoming data.
+    .errors - Returns an errors during validation.
+    .save() - Persists the validated data into an object instance.
+
+
+
+
+
+def get_queryset(self):
+    user = self.request.user
+    return user.accounts.all()
+
+def get_object(self):
+    queryset = self.get_queryset()
+    filter = {}
+    for field in self.multiple_lookup_fields:
+        filter[field] = self.kwargs[field]
+
+    obj = get_object_or_404(queryset, **filter)
+    self.check_object_permissions(self.request, obj)
+    return obj
+
+# product with  admin and without 
+class ProductView(GenericAPIView):
+    queryset = Product.objects.all()
+
+    def get_serializer_class(self):
+        # Use AdminProductSerializer if the user is an admin
+        if self.request.user.is_staff:
+            return AdminProductSerializer
+        # Otherwise, use the regular ProductSerializer
+        return ProductSerializer
+
+    def get(self, request, *args, **kwargs):
+        # Fetch all products and serialize based on the user type
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+
+request hundler:
+    data:
+        request.(put,post or patch) ==  request.FILES 
+        request.post == request.data
+    query_param: 
+        request.GET == request.query_params
+    
+    

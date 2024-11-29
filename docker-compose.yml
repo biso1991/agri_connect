@@ -5,8 +5,10 @@ services:
     image: postgres:11.6
     environment:
       POSTGRES_USER: dbuser
-      POSTGRES_PASSWORD: dbpassword
-      POSTGRES_DB: dbbib
+      POSTGRES_PASSWORD: 1991
+      POSTGRES_DB: db
+    networks:
+      - agr_network
 
   web:
     container_name: web
@@ -21,6 +23,8 @@ services:
                ./manage.py migrate &&
                ./manage.py runserver 0.0.0.0:8000
               "
+    networks:
+    - agr_network
   # celery -A api worker --loglevel=info -E -P threads &
     # deploy:
     #   resources:
@@ -50,16 +54,18 @@ services:
   #     - redis
   #   restart: always
   
-  documentation:
-    container_name: documentation
-    restart: always
-    build: 
-      context: ./document
-    command: "mkdocs serve" # mkdocs new . && mkdocs serve && mkdocs build
-    volumes:
-      - ./:/document
-    ports:
-      - '8001:8001'
+  # documentation:
+  #   container_name: documentation
+  #   restart: always
+  #   build: 
+  #     context: ./document
+  #   command: "mkdocs serve" # mkdocs new . && mkdocs serve && mkdocs build
+  #   volumes:
+  #     - ./:/document
+  #   ports:
+  #     - '8001:8001'
+  #   networks:
+  #   - agr_network
   # pgadmin:
   #   container_name: pgadmin
   #   depends_on:
@@ -72,6 +78,8 @@ services:
   #     PGADMIN_DEFAULT_PASSWORD: 1991
   #   ports:
   #     - 5050:80
+  #   networks:
+  #   - agr_network
   # mailhog:
   #   image: mailhog/mailhog
   #   container_name: mailhog
@@ -81,17 +89,19 @@ services:
   #     - 1025:1025 # smtp server
   #     - 8025:8025 # web ui
   
-  # redis:
-  #   container_name: redis
-  #   image: redis:6.2-alpine
-  #   restart: always
-  #   # network_mode: 172.22.0.3
-  #   ports:
-  #     - '6379:6379'
-  #   # tty: true
-  #   command: redis-server --save 20 1 --loglevel warning
-  #   volumes:
-  #     - cache-redis2:/data
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    restart: always
+    # network_mode: 172.22.0.3
+    ports:
+      - '6379:6379'
+    # tty: true
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache-redis2:/data
+    networks:
+    - agr_network
   # flower:
   #   container_name: flower 
   #   image: mher/flower
@@ -103,7 +113,14 @@ services:
   #   depends_on:
   #     - redis
   #   restart: always
+  
+      
 volumes:
   cache-redis2:
     driver: local
+  
+networks:
+  agr_network:
+    name: agr_networks
+    driver: bridge
 # --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81

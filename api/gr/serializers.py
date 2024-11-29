@@ -1,28 +1,56 @@
-from .models import Product, Logistics, Rdv
+from .models import Product, Market 
 from rest_framework import serializers
 
 # serializing book and borrow
-class ProductSerializer(serializers.ModelSerializer):
 
+# class Market Serializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Market 
+#         fields = '__all__'
+
+
+# class ProductSerializer(serializers.ModelSerializer):
+    
+#     class Meta:
+#         model = Product
+#         fields = '__all__'
+
+class MarketSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Market 
         fields = '__all__'
-
 
 class GetProductByUserSerialize(serializers.Serializer):
 
     owner = serializers.CharField(required=True)
 
-class LogisticSerialize(serializers.ModelSerializer):
-      class Meta:
-        model = Logistics
+class ConsumerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
         fields = '__all__'
-class RdvSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = Rdv
-        fields= "__all__"
 
-        
+
+class AdminProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'product_name', 'price', 'description',"rating", ]  # Basic fields
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+
+
+# class LogisticSerialize(serializers.ModelSerializer):
+#       class Meta:
+#         model = Logistics
+#         fields = '__all__'
+# class RdvSerializer(serializers.ModelSerializer):
+#     class Meta: 
+#         model = Rdv
+#         fields= "__all__"
+# class 
 
 
 

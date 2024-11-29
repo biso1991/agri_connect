@@ -126,10 +126,6 @@
 7. **Product → Logistics:**
    * Association: A Product has associated Logistics for delivery.
 
-
-
-
-
 Based on the detailed description and information you provided from **MyTek's** website, I can create a conceptual class diagram that models the core components of their e-commerce system. Below is the **class diagram** which incorporates entities like products, categories, customer service, orders, payment, delivery, and customer interaction.
 
 ### Conceptual Class Diagram for **MyTek**:
@@ -266,9 +262,9 @@ Based on the detailed description and information you provided from **MyTek's** 
 - **Delivery** is linked to an **Order** for tracking purposes.
 - **CustomerService** is available for **Customers** to resolve issues.
 
----
+### Class Diagram (Textual Representation):
 
-### Example of a Class Diagram (Textual Representation):
+change name category to market !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ```
 +---------------+        +-------------+        +--------------+
@@ -319,10 +315,6 @@ This diagram shows the relationships between:
 You can visualize this diagram with a tool like **LucidChart**, **Draw.io**, or any UML diagram software for better graphical representation.
 
 If you want a graphical version, I can generate one for you based on this textual description. Let me know!
-
-
-
-
 
 ### Key Points About  **Rating** :
 

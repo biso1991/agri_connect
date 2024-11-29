@@ -10,9 +10,9 @@ from django.core.mail import send_mail
 import enum
 
 
-def check_country_nm(country_number):
+# def check_country_nm(country_number): cheking !!!!!! 
     # user =User.objects.get(country=instance.country_nm)
-    return "{country_number}".format(country_number="+216")
+    # return "{country_number}".format(country_number="+216")
 
 
 # class Nm_cnrt(enum.Enum):

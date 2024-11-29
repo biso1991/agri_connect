@@ -34,6 +34,7 @@ class Common(Configuration):
         # Your apps
         "api.users",
         "api.gr",
+        "api.snippets",
     )
 
     # CHANNEL_LAYERS = {
@@ -75,7 +76,7 @@ class Common(Configuration):
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "mailhog"
     EMAIL_PORT = 1025
-    EMAIL_HOST_USER = ""
+    EMAIL_HOST_USER = "bilel19@gmail.com"
     EMAIL_HOST_PASSWORD = ""
     EMAIL_USE_TLS = False
     # My Supervisor 
@@ -91,7 +92,7 @@ class Common(Configuration):
     # Postgres
     DATABASES = {
         "default": dj_database_url.config(
-            default="postgres://dbuser:dbpassword@postgres:5432/dbbib",
+            default="postgres://dbuser:1991@postgres:5432/db",
             conn_max_age=int(os.getenv("POSTGRES_CONN_MAX_AGE", 600)),
         )
     }

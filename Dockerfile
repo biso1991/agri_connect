@@ -2,7 +2,7 @@ FROM python:3.8 as base_web
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update
-RUN apt-get install libmagic1 libsndfile1 ffmpeg -y
+# RUN apt-get install libmagic1 libsndfile1 ffmpeg -y
 
 RUN pip install --upgrade pip
 
