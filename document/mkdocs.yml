@@ -23,6 +23,7 @@ nav:
   - Conception : 
     - Module_project: 'global_conception/module_project.md'
     - Conception: 'global_conception/Conception.md'
+    - APIGuid : 'global_conception/guid_api_views.md'
     
     
 

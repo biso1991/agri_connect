@@ -9,20 +9,21 @@ import enum
 
 # Create agr model
 class Market_scoop(enum.Enum):   
-    product_one  =  1
-    product_two = 2
-    product_three = 3
-    product_four = 4
+    product_one  =  "product_one"
+    product_two = "product_two"  
+    product_three = "product_three"
+    product_four = "product_four"
 
 class Market(models.Model):
-    choice_prod= ((Market_scoop.product_one.value, 1),
-                  (Market_scoop.product_two.value , 2),
-                  (Market_scoop.product_three.value , 3),
-                  (Market_scoop.product_four.value , 4)
+    choice_prod= ((Market_scoop.product_one.value, "product_one"),
+                  (Market_scoop.product_two.value , "product_two"),
+                  (Market_scoop.product_three.value , "product_three"),
+                  (Market_scoop.product_four.value , "product_four")
                   )
+    
     name = models.CharField( "name_mk", max_length=50, blank=True)
     mark_number = models.CharField(max_length=50, choices=choice_prod, default=Market_scoop.product_one.value)
-    # uuid = models.UUIDField("uuid", default=uuid.uuid4, editable=False )
+    uuid = models.UUIDField("uuid", default=uuid.uuid4, editable=False )
     # owner = models.ForeignKey(User , null=True , on_delete=models.deletion.CASCADE)
     
     
@@ -31,6 +32,9 @@ class Market(models.Model):
     class Meta:
         verbose_name = "Market _table"
         verbose_name_plural = "Market _tables"
+
+
+
 
 class Rate(enum.Enum): 
     NOTHING = 0.0 
@@ -44,6 +48,11 @@ class Product_type(enum.Enum):
     MULTIPRO = "muli pack prd"
     SiNGL_PR = "Single Product"
 
+
+class  Buyer_seller(enum.Enum):
+    BUYER = "buyer"
+    SELLER = "seller"
+    # BOTH = "both" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 class Product(models.Model):
     choice_rate = ((Rate.NOTHING.value,    0.0),
                    (Rate.POOR.value  ,     1.0 ),
@@ -55,6 +64,10 @@ class Product(models.Model):
     
     CHOICE_PR_TY  = ((Product_type.MULTIPRO.value,"muli pack prd" ),
                       (Product_type.SiNGL_PR.value,"Single Product" ))
+    
+    CHOICE_BUY_SELL = ((Buyer_seller.BUYER.value, "buyer"),
+                          (Buyer_seller.SELLER.value, "seller")
+                          )
     product_name = models.CharField( "library name",max_length=20,default="", blank=True)
     description = models.TextField("description_lib",default="", blank=True)
     # option = models.CharField("option quantity", max_length=50, choices=Choose_opt_Prod, default=Choose_opt_Prod.SINGLE_PROD.value)
@@ -65,10 +78,12 @@ class Product(models.Model):
     type = models.CharField("Type of product", max_length=20, choices=CHOICE_PR_TY,
                              default=Product_type.SiNGL_PR.value )
     # warranty = models.CharField("warranty of product", max_length=50) important
-    rating = models.FloatField(" rating of  product", choices=choice_rate, default=Rate.NOTHING.value, blank=True) 
+    rating = models.FloatField("rating of product", choices=choice_rate, default=Rate.NOTHING.value, blank=True)
     # owner = models.ForeignKey(User, on_delete=models.deletion.CASCADE, null=True)
     uuid = models.UUIDField("uuid", default=uuid.uuid4, editable=False)
-    market_k = models.ForeignKey(Market, on_delete=models.deletion.CASCADE, null=True)
+    # market_k = models.ForeignKey(Market, on_delete=models.deletion.CASCADE, null=True)7
+    Buy_sell = models.CharField("buyer seller", max_length=10, choices=CHOICE_BUY_SELL, default=Buyer_seller.BUYER.value, blank=False)
+     
     class Meta:
         verbose_name = "product_table"
         verbose_name_plural = "product_tables"
@@ -76,6 +91,8 @@ class Product(models.Model):
     # class Meta:
     #     db_table = "product_table"
 
+
+   
 
 # class Consumer(models.Model):
 #     # name = models.CharField("name", max_length=20, default="", blank=True)
@@ -92,6 +109,12 @@ class Product(models.Model):
 #         verbose_name_plural = "consumer_tables"
     # class Meta:
     #     db_table = "consumer_table"
+    
+#####################################
+# Issue: 
+    # create to do  project github name  
+#####################################
+
 
 class Status(enum.Enum):
     IDLE = "idle"
@@ -180,6 +203,9 @@ class Order_item(models.Model):
         verbose_name = "order item"
         verbose_name_plural = "order items"
         # ordering = ["-id"]
+
+
+
 
 
 

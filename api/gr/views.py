@@ -17,37 +17,90 @@ from rest_framework import filters
 from django.db.models import Q
 from rest_framework import status
 
-
-
 class MarketAPIView(mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.ListModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
-                    viewsets.GenericViewSet,
-                  ):
-    # get format get method 
-    # queryset = Market.objects.get()
-
+                    viewsets.GenericViewSet):
     queryset = Market.objects.all()
+    # print queryset data object 
+
+
     serializer_class = MarketSerializer
-    def create(self, request, *args, **kwargs):
-       if serializer_class.is_valid():
-           try:
-                prod = Market.objects.get(id=request.data.get("market_k"))
-           except:
-                return Response(
-                    {"message": "No Manket found"}, status=status.HTTP_404_NOT_FOUND
-                )
-       serializer_class = self.get_serializer(data=request.data)      
-       print(request.data)
-    #    print("##################################")
-    #    prod = Market.objects.get(id=request.data.get("market_k"))
-    #    print(prod)
-       return super().create(request, *args, **kwargs)
+    # print(serializer_class,"##############################################")
+
     
-    def get_queryset(self):
-       return super().get_queryset()
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        print(request.data, "##################################")
+        
+        # if serializer.is_valid():
+        #     market_id = request.data.get("mark_number")  # Adjusted key to match request data
+        #     if not market_id:
+        #         return Response(
+        #             {"message": "Market ID not provided"},
+        #             status=status.HTTP_400_BAD_REQUEST
+        #         )
+        #     try:
+        #         # Ensure market_id is an integer
+        #         market_id = int(market_id)
+        #         prod = Market.objects.get(id=market_id)
+        #     except ValueError:
+        #         return Response(
+        #             {"message": "Market ID must be an integer"},
+        #             status=status.HTTP_400_BAD_REQUEST
+        #         )
+        #     except Market.DoesNotExist:
+        #         return Response(
+        #             {"message": "No Market found"},
+        #             status=status.HTTP_404_NOT_FOUND
+        #         )
+        # else:
+        #     return Response(
+        #         serializer.errors,
+        #         status=status.HTTP_400_BAD_REQUEST
+        #     )
+        # mrt = Market.objects.all()
+        # print(mrt, "######################################55555")
+        return super().create(request, *args, **kwargs)
+
+# class MarketAPIView(mixins.CreateModelMixin,
+#                     mixins.RetrieveModelMixin,
+#                     mixins.ListModelMixin,
+#                     mixins.UpdateModelMixin,
+#                     mixins.DestroyModelMixin,
+#                     viewsets.GenericViewSet,
+#                   ):
+#     # get format get method 
+#     # queryset = Market.objects.get()
+
+#     queryset = Market.objects.all()
+#     serializer_class = MarketSerializer
+#     def create(self, request, *args, **kwargs):
+#         serializer_class = MarketSerializer
+#         print(serializer_class)
+#         if serializer_class.is_valid():
+#            try:
+#                 prod = Market.objects.get(id=request.data.get("market_k"))
+#            except:
+#                 return Response(
+#                     {
+#                         "message": "No Manket found"
+#                     },
+#                         status=status.HTTP_404_NOT_FOUND
+#                 )
+#         mrt = Market.objects.all()
+#         print(mrt, "######################################55555")
+#         serializer_class = self.get_serializer(data=request.data)      
+#         # print(request.data)
+#     #    print("##################################")
+#     #    prod = Market.objects.get(id=request.data.get("market_k"))
+#     #    print(prod)
+#         return super().create(request, *args, **kwargs)
+    
+#     def get_queryset(self):
+#        return super().get_queryset()
    
     
     
@@ -101,19 +154,57 @@ class ProductAPIVIEW(mixins.RetrieveModelMixin,
     print(serializer_class)
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        serializer_class = self.get_serializer(data=request.data)
+        # mr = Market.objects.get(id=1)
+        # print(mr.name, "##################################################")
+        # if serializer_class.is_valid():
+        #     try:
+        #         makeret_id = Market.objects.get(
+        #             id=serializer_class.validated_data["Market"].id
+        #         )
+        #     except:
+        #         return Response(
+        #             {"message": "No MARKET  found"}, status=status.HTTP_404_NOT_FOUND
+                # )
         print(request.data, "####################")
         request.data._mutable =True
         request.data["owner"]=request.user.id
         request.data._mutable = False
         print(request.data," ééééééééééééééééééééééééééééé")
-        if serializer.is_valid():
-            mk = Market.objects.get(id= request.data("market_k"))
-            print(request.data)
-            print(len(request.data))
-        else:
-            print("mark is not found")
+        # if serializer_class.is_valid():
+        #     # mk = Market.objects.get(id= request.data("market_k"))
+        #     print(request.data)
+        #     print(len(request.data))
+        # else:
+        #     print("mark is not found")
         return super().create(request, *args, **kwargs)
+        # if serializer.is_valid():
+        #     try:
+        #         ownerProject = Project.objects.get(
+        #             id=serializer.validated_data["project"].id
+        #         )
+        #     except:
+        #         return Response(
+        #             {"message": "No project found"}, status=status.HTTP_404_NOT_FOUND
+        #         )
+        #     permission = Has_permissionOrReadOnly.has_object_permission(
+        #         self, request, None, ownerProject
+        #     )
+        #     if permission == True:
+        #         ownerProject.files_hash = get_hash(ownerProject)
+        #         ownerProject.save()
+        #         serializer.save()
+        #         response = {"data": serializer.data, "status": "success"}
+        #         return Response(response, status=status.HTTP_201_CREATED)
+        #     else:
+        #         response = {
+        #             "message": "You don't have permission to access this resource",
+        #             "status": "error",
+        #         }
+        #         return Response(response, status=status.HTTP_403_FORBIDDEN)
+        # else:
+        #     response = {"message": serializer.errors, "status": "error"}
+        #     return Response(response, status=status.HTTP_400_BAD_REQUEST) 
         # serializer.is_valid(raise_exception=True)
         # headers = self.get_success_headers(serializer.data)
         # print(request.data)

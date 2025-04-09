@@ -34,8 +34,9 @@ class Common(Configuration):
         # Your apps
         "api.users",
         "api.gr",
-        "api.snippets",
+        "api.blogs",
     )
+
 
     # CHANNEL_LAYERS = {
     #     "default": {
